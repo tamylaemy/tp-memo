@@ -1,3 +1,3 @@
-# Exercice 4 - Solution : Application Memo
+# TP : Application Memo
 
-Solution modèle de l'exercice 4 du cours 582-4PA.
+Remise TP de Tamyla Ait-Chellouche pour le cours 582-4PA.
