@@ -3,9 +3,26 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import * as crudTaches from '../services/crud-taches';
+import { useEffect } from 'react';
 
-export default function Controle({etatTaches, utilisateur}) {
+export default function Controle({etatTaches, utilisateur, completee, supprimerToutesTaches, idColl}) {
   
+
+  const [taches, setTaches] = etatTaches;
+  const uid = utilisateur.uid;
+
+  /* //Supprimer toutes les tâche complétée
+    function supprimerToutesTaches(idColl){
+      crudTaches.supprimerTout(uid, idColl, completee).then(
+        () => {
+          setTaches(taches.filter(task => {
+            return task.id !== idColl
+          }))
+        }
+      )
+    } */
+
   return (
     <footer className="Controle">
       <ToggleButtonGroup 
@@ -17,14 +34,14 @@ export default function Controle({etatTaches, utilisateur}) {
         <ToggleButton value={false}>Actives</ToggleButton>
       </ToggleButtonGroup>
       <span className="compte">
-        ?? tâches restantes
+        {taches.length} tâches restantes
       </span>
       <IconButton 
         aria-label="delete" 
         size="small" 
         variant="contained" 
         color="secondary" 
-        onClick={() => alert('Rien pour le moment')} 
+        /* onClick={() => supprimerToutesTaches(idColl)} */
         title="Supprimer les tâches complétées"
       >
         <DeleteIcon fontSize="small" />
