@@ -12,6 +12,8 @@ export default function Controle({etatTaches, utilisateur, completee, supprimerT
   const [taches, setTaches] = etatTaches;
   const uid = utilisateur.uid;
 
+  const nbTaches = taches.filter(t => t.completee == false).length;
+
   /* //Supprimer toutes les tâche complétée
     function supprimerToutesTaches(idColl){
       crudTaches.supprimerTout(uid, idColl, completee).then(
@@ -34,7 +36,7 @@ export default function Controle({etatTaches, utilisateur, completee, supprimerT
         <ToggleButton value={false}>Actives</ToggleButton>
       </ToggleButtonGroup>
       <span className="compte">
-        {taches.length} tâches restantes
+        {nbTaches} tâches restantes
       </span>
       <IconButton 
         aria-label="delete" 
