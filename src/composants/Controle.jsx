@@ -4,26 +4,16 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import * as crudTaches from '../services/crud-taches';
-import { useEffect } from 'react';
 
-export default function Controle({etatTaches, utilisateur, completee, supprimerToutesTaches, idColl}) {
+export default function Controle({etatTaches, utilisateur, supprimerToutesTaches}) {
   
 
-  const [taches, setTaches] = etatTaches;
+  const [taches] = etatTaches;
   const uid = utilisateur.uid;
 
-  const nbTaches = taches.filter(t => t.completee == false).length;
+  const nbTaches = taches.filter(t => t.completee === false).length;
 
-  /* //Supprimer toutes les tâche complétée
-    function supprimerToutesTaches(idColl){
-      crudTaches.supprimerTout(uid, idColl, completee).then(
-        () => {
-          setTaches(taches.filter(task => {
-            return task.id !== idColl
-          }))
-        }
-      )
-    } */
+  //Supprimer toutes les tâche complétée
 
   return (
     <footer className="Controle">
@@ -31,9 +21,11 @@ export default function Controle({etatTaches, utilisateur, completee, supprimerT
         size="small" 
         exclusive={true} 
       >
-        <ToggleButton value={'toutes'}>Toutes</ToggleButton>
-        <ToggleButton value={true}>Complétées</ToggleButton>
-        <ToggleButton value={false}>Actives</ToggleButton>
+        <ToggleButton value={'toutes'} onClick={() =>
+        crudTaches.lireTout(uid)}>Toutes</ToggleButton>
+        <ToggleButton value={true} onClick={() =>
+        crudTaches.lireCompletee(uid)}>Complétées</ToggleButton>
+        <ToggleButton value={false} onClick={() => crudTaches.lirePasCompletee(uid)}>Actives</ToggleButton>
       </ToggleButtonGroup>
       <span className="compte">
         {nbTaches} tâches restantes
@@ -43,7 +35,7 @@ export default function Controle({etatTaches, utilisateur, completee, supprimerT
         size="small" 
         variant="contained" 
         color="secondary" 
-        /* onClick={() => supprimerToutesTaches(idColl)} */
+        onClick={() => crudTaches.supprimerTout(uid)}
         title="Supprimer les tâches complétées"
       >
         <DeleteIcon fontSize="small" />

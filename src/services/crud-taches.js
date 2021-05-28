@@ -40,6 +40,40 @@ export async function lireTout(uid) {
                 );
 }
 
+// Toutes les tâches complétées
+export async function lireCompletee(uid) {
+  const tachesCompletees = [];
+    return instanceFirestore.collection(collUtil).doc(uid).collection(collTaches)
+  .where('completee', '==', true)
+  .orderBy('date','desc')
+  .get().then(
+  reponse => reponse.forEach(
+    doc => {
+      tachesCompletees.push({id: doc.id, ...doc.data()})
+    }
+  )
+  ).then(
+    () => tachesCompletees
+  );
+}
+
+// Toutes les tâches non-complétées
+export async function lirePasCompletee(uid) {
+  const tachesPasCompletees = [];
+  return instanceFirestore.collection(collUtil).doc(uid).collection(collTaches)
+  .where('completee', '==', false)
+  .orderBy('date','desc')
+  .get().then(
+    reponse => reponse.forEach(
+      doc => {
+        tachesPasCompletees.push({id: doc.id, ...doc.data()})
+      }
+    )
+  ).then(
+    () => tachesPasCompletees
+  );
+}
+
 /**
  * Modifie l'état d'une tâche dans Firestore pour l'utilisateur connecté
  * @param {String} uid Identifiant de l'utilisateur connecté
@@ -68,10 +102,15 @@ export async function supprimer(uid, tid) {
  * 
  * Supprimer tout
  * 
-
+**/
  export async function supprimerTout(uid, tid) {
   return instanceFirestore.collection(collUtil).doc(uid).collection(collTaches)
-    .doc(tid).delete();
+    .where("completee", "==", true).get().then(
+      supprimer =>
+      {
+        supprimer.forEach(
+          doc => doc.ref.delete()
+        );
+      } 
+    );
 } 
-
- */

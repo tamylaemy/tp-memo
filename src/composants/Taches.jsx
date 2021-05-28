@@ -1,7 +1,7 @@
 import Tache from './Tache';
 import './Taches.scss';
 import * as crudTaches from '../services/crud-taches';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 export default function Taches({etatTaches, utilisateur}) {
   const uid = utilisateur.uid;
@@ -65,6 +65,7 @@ export default function Taches({etatTaches, utilisateur}) {
       ))
     )
   }
+
 
   return (
     <section className="Taches">
